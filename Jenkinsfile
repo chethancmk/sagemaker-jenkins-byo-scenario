@@ -19,7 +19,7 @@ pipeline {
             steps {
               sh """
                 echo "${params.ECRURI}"
-                aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${params.ECRURI}
+                aws ecr get-login-password --region ${params.AWS_REGION} | docker login --username AWS --password-stdin ${params.ECRURI}
  	              docker build -t scikit-byo:${env.BUILD_ID} .
                 docker tag scikit-byo:${env.BUILD_ID} ${params.ECRURI}:${env.BUILD_ID} 
                 docker push ${params.ECRURI}:${env.BUILD_ID}
