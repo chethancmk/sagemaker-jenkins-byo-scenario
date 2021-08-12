@@ -35,24 +35,22 @@ pipeline {
               """
              }
         }
-
+        
       stage("TrainStatus") {
-            steps  {
-                        script {
-                            timeout(10) {
-                                waitUntil(initialRecurrencePeriod: 15000) {
-                                   def response = sh """        
-                    /usr/local/bin/aws lambda invoke --function-name ${params.LAMBDA_CHECK_STATUS_TRAINING} --cli-binary-format raw-in-base64-out --region us-east-1 --payload '{"TrainingJobName": "${params.SAGEMAKER_TRAINING_JOB}-${env.BUILD_ID}"}' response.json                
+            steps {
+              script {
+                    def response = sh """ 
+                    TrainingJobStatus=`aws sagemaker describe-training-job --training-job-name \"${params.SAGEMAKER_TRAINING_JOB}-${env.BUILD_ID}\" | grep -Po \'"\'"TrainingJobStatus"\'"\\s*:\\s*"\\K([^"]*)\'`
+                    echo \$TrainingJobStatus
+                    while [ \$TrainingJobStatus = "InProgress" ] ; do
+                      TrainingJobStatus=`aws sagemaker describe-training-job --training-job-name \"${params.SAGEMAKER_TRAINING_JOB}-${env.BUILD_ID}\" | grep -Po \'"\'"TrainingJobStatus"\'"\\s*:\\s*"\\K([^"]*)\'`
+                      echo \$TrainingJobStatus
+                      sleep 1m
+                    done
                     """
-                                    println  response
-                                    def props = readJSON text: '{ "key": "value" }'
-                                    if (props['key'] == 'value'){
-                                         return(true)
-                                    }                                    
-                                }
-                            }
-                        }
-                    }
+                    
+                  }
+              }
       }
 
       stage("DeployToTest") {
