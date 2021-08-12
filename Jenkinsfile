@@ -51,8 +51,6 @@ pipeline {
                             }
                         }
                     }
-           
-              }
       }
 
       stage("DeployToTest") {
