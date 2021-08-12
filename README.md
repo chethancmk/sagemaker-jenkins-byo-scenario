@@ -1,6 +1,6 @@
 # MLOps: Jenkins & Bring-Your-Own-Algorithm
 
-In this workshop, we will focus on building a pipeline to train and deploy a model using Amazon SageMaker training instances and hosting on persistent Sagemaker endpoint instance(s).  The orhestration of the training and deployment will be done through [Jenkins](https://www.jenkins.io/).  
+In  this workshop, we will focus on building a pipeline to train and deploy a model using Amazon SageMaker training instances and hosting on persistent Sagemaker endpoint instance(s).  The orhestration of the training and deployment will be done through [Jenkins](https://www.jenkins.io/).  
 
 
 Applying DevOps practices to Machine Learning (ML) workloads is a fundamental practice to ensure machine learning workloads are deployed using a consistent methodology with traceability, consistenc, governance and quality gates. MLOps involves applying practices such as CI/CD,Continuous Monitoring, and Feedback Loops to the Machine Learning Development Lifecycle. This workshop will focus primarily on setting up a base deployment pipeline in Jenkins.  The expectation would be to continue to iterate on a base pipeline incorporating more quality checks and and pipeline features including the consideration for an data worflow pipeline.  
