@@ -45,7 +45,10 @@ pipeline {
                     /usr/local/bin/aws lambda invoke --function-name ${params.LAMBDA_CHECK_STATUS_TRAINING} --cli-binary-format raw-in-base64-out --region us-east-1 --payload '{"TrainingJobName": "${params.SAGEMAKER_TRAINING_JOB}-${env.BUILD_ID}"}' response.json                
                     """
                                     println  response
-                                     return(true)
+                                    def props = readJSON text: '{ "key": "value" }'
+                                    if (props['key'] == 'value'){
+                                         return(true)
+                                    }                                    
                                 }
                             }
                         }
